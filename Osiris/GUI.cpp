@@ -320,6 +320,16 @@ void GUI::renderAimbotWindow(bool contentOnly) noexcept
     config->aimbot[currentWeapon].minDamage = std::clamp(config->aimbot[currentWeapon].minDamage, 0, 250);
     ImGui::Checkbox("Killshot", &config->aimbot[currentWeapon].killshot);
     ImGui::Checkbox("Between shots", &config->aimbot[currentWeapon].betweenShots);
+    ImGui::SliderFloat("Recoil control", &config->aimbot[currentWeapon].recoilControl, 0.0f, 100.0f, "%.5f", ImGuiSliderFlags_Logarithmic);
+    ImGui::Combo("Auto stop mode", &config->aimbot[currentWeapon].autoStopMode, "Classic\0Accuracy\0");
+    if (config->aimbot[currentWeapon].autoStopMode = 0) {
+        ImGui::Checkbox("Auto stop", &config->aimbot[currentWeapon].autoStop);
+        ImGui::SliderFloat("Minimum speed", &config->aimbot[currentWeapon].minimumSpeed, 0.0f, 250.0f, "%.5f", ImGuiSliderFlags_Logarithmic);
+        ImGui::SliderFloat("Stop speed", &config->aimbot[currentWeapon].stopSpeed, 0.0f, 250.0f, "%.5f", ImGuiSliderFlags_Logarithmic);
+    }
+    else {
+        ImGui::Checkbox("Force accuracy", &config->aimbot[currentWeapon].forceAccuracy);
+    }
     ImGui::Columns(1);
     if (!contentOnly)
         ImGui::End();

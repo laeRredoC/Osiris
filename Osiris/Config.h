@@ -49,6 +49,12 @@ public:
         int minDamage{ 1 };
         bool killshot{ false };
         bool betweenShots{ true };
+        float recoilControl{ 35.0f };
+        int autoStopMode{ 0 };
+        bool autoStop{ false };
+        float minimumSpeed{ 1.0f };
+        float stopSpeed{ 1.0f };
+        bool forceAccuracy{ false };
     };
     std::array<Aimbot, 40> aimbot;
     bool aimbotOnKey{ false };

@@ -26,8 +26,18 @@
 struct AnimState;
 
 enum class MoveType {
-    NOCLIP = 8,
-    LADDER = 9
+    NONE = 0,
+    ISOMETRIC,
+    WALK,
+    STEP,
+    FLY,
+    FLYGRAVITY,
+    VPHYSICS,
+    PUSH,
+    NOCLIP,
+    LADDER,
+    OBSERVER,
+    CUSTOM
 };
 
 enum class ObsMode {
@@ -122,8 +132,10 @@ public:
     auto requiresRecoilControl() noexcept
     {
         const auto weaponData = getWeaponData();
+        const auto activeWeapon = localPlayer->getActiveWeapon();
+        auto weaponIndex = getWeaponIndex(activeWeapon->itemDefinitionIndex2());
         if (weaponData)
-            return weaponData->recoilMagnitude < 35.0f && weaponData->recoveryTimeStand > weaponData->cycletime;
+            return weaponData->recoilMagnitude < config->aimbot[weaponIndex].recoilControl && weaponData->recoveryTimeStand > weaponData->cycletime;
         return false;
     }
 
@@ -291,6 +303,8 @@ public:
     NETVAR(droneTarget, "CDrone", "m_hMoveToThisEntity", int)
 
     NETVAR(thrower, "CBaseGrenade", "m_hThrower", int)
+
+    NETVAR(zoomLevel, "CWeaponCSBaseGun", "m_zoomLevel", int)
         
     NETVAR(mapHasBombTarget, "CCSGameRulesProxy", "m_bMapHasBombTarget", bool)
 
